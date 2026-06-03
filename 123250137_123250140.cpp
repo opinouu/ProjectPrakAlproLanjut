@@ -294,6 +294,135 @@ void cariData() {
     cout << "IPK            : " << m[found].ipk << endl;
 }
 
+void simpanData(Mahasiswa m[], int n)
+{
+    ofstream file("dataMahasiswa.txt");
+
+    for(int i = 0; i < n; i++)
+    {
+        file << m[i].namaMahasiswa << "|";
+        file << m[i].nim << "|";
+        file << m[i].prodi << "|";
+        file << m[i].fakultas << " | ";
+        file << m[i].ipk << endl;
+    }
+
+    file.close();
+}
+
+void ubahData()
+{
+    Mahasiswa m[100];
+    int n;
+
+    muatData(m, n);
+
+    if(n == 0)
+    {
+        cout << "Data kosong!" << endl;
+        return;
+    }
+
+    cout << "\n=== DAFTAR DATA ===\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cout << i + 1 << ". "
+             << m[i].namaMahasiswa
+             << " | " << m[i].nim
+             << " | " << m[i].prodi
+             << " | "<< m[i].fakultas 
+             << " | " << m[i].ipk
+             << endl;
+    }
+
+    int pilihData;
+
+    cout << "\nPilih nomor data yang ingin diubah: ";
+    cin >> pilihData;
+    cin.ignore();
+
+    if(pilihData < 1 || pilihData > n)
+    {
+        cout << "Nomor data tidak valid!" << endl;
+        return;
+    }
+
+    int index = pilihData - 1;
+
+    cout << "\n=== INPUT DATA BARU ===\n";
+
+    cout << "Nama Mahasiswa : ";
+    getline(cin, m[index].namaMahasiswa);
+
+    cout << "NIM            : ";
+    getline(cin, m[index].nim);
+
+    cout << "Prodi          : ";
+    getline(cin, m[index].prodi);
+
+    cout << "Fakultas       : ";
+    getline(cin, m[index].fakultas);
+
+    cout << "IPK            : ";
+    cin >> m[index].ipk;
+
+    simpanData(m, n);
+
+    cout << "\nData berhasil diubah!" << endl;
+}
+
+void hapusData()
+{
+    Mahasiswa m[100];
+    int n;
+
+    muatData(m, n);
+
+    if(n == 0)
+    {
+        cout << "Data kosong!" << endl;
+        return;
+    }
+
+    cout << "\n=== DAFTAR DATA ===\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cout << i + 1 << ". "
+             << m[i].namaMahasiswa
+             << " | " << m[i].nim
+             << " | " << m[i].prodi
+             << " | "<< m[i].fakultas 
+             << " | " << m[i].ipk
+             << endl;
+    }
+
+    int pilihData;
+
+    cout << "\nPilih nomor data yang akan dihapus: ";
+    cin >> pilihData;
+
+    if(pilihData < 1 || pilihData > n)
+    {
+        cout << "Nomor data tidak valid!" << endl;
+        return;
+    }
+
+    int index = pilihData - 1;
+
+    for(int i = index; i < n - 1; i++)
+    {
+        m[i] = m[i + 1];
+    }
+
+    n--;
+
+    simpanData(m, n);
+
+    cout << "\nData berhasil dihapus!" << endl;
+}
+
 int main() {
     int pilih;
     do{
@@ -307,6 +436,7 @@ int main() {
         cout<<"4. Cari Data Mahasiswa"<<endl;
         cout<<"5. Ubah Data Mahasiswa"<<endl;
         cout<<"6. Hapus Data Mahasiswa"<<endl;
+        cout<<"7. Keluar Program"<<endl;
         cout<<"============================================"<<endl;
         cout<<"Pilih Menu (1-?): ";
         cin>>pilih;
@@ -330,11 +460,14 @@ int main() {
             break;
         case 6:
             hapusData();
-            break;
+            break;  
+        case 7:
+            cout<<"Kamu sudah keluar dari program!!";
+            exit(0);
         default:
             cout<<"Pilihan Tidak Valid"<<endl;
             break;
         }
-    } while(pilih !=?);
+    } while(pilih !=7);
     return 0;
 }
